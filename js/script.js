@@ -215,12 +215,10 @@ document.addEventListener("click", (event) => {
 });
 /* iframe 전체화면 */
 document.addEventListener("DOMContentLoaded", () => {
-  // 섹션별 요소를 동적으로 처리
   const sectionCount = 6; // 총 섹션 개수
   const playerInstances = {};
 
   // YouTube IFrame API 객체 초기화
-  let player;
   function onYouTubeIframeAPIReady() {
     for (let i = 1; i <= sectionCount; i++) {
       const iframeId = `youtubePlayer${i}`;
@@ -229,7 +227,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (iframeElement) {
         playerInstances[iframeId] = new YT.Player(iframeId, {
           events: {
-            onReady: () => console.log(`${iframeId} YouTube Player Ready`),
+            onReady: (event) => {
+              console.log(`${iframeId} YouTube Player Ready`);
+              // 플레이어 준비 완료 상태 설정
+              event.target.readyState = true;
+            },
           },
         });
       }
@@ -253,16 +255,23 @@ document.addEventListener("DOMContentLoaded", () => {
       continue;
     }
 
-    // '텍스트 클릭' 시 동영상 표시 및 전체화면 전환
+    // '텍스트 클릭' 시 동영상 표시 및 화질 설정
     textMaskSvg.addEventListener("click", () => {
       youtubePlayer.style.display = "block";
       videoBg.style.display = "block";
 
       const player = playerInstances[`youtubePlayer${i}`];
       if (player) {
-        player.playVideo();
-        player.getIframe().requestFullscreen();
-        player.unMute();
+        // 플레이어 준비 여부 확인
+        if (player.readyState) {
+          player.setPlaybackQuality("hd1080"); // 즉시 화질 설정
+          player.playVideo();
+          player.getIframe().requestFullscreen();
+          player.unMute();
+          console.log("화질을 1080p로 설정했습니다.");
+        } else {
+          console.log("플레이어가 아직 준비되지 않았습니다.");
+        }
       }
     });
 

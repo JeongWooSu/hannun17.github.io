@@ -383,13 +383,13 @@ footer .social-links a:hover {
 }
 
 .video-iframe {
-  display: none;
-  position: fixed;
+  display: none; /* 기본적으로 숨김 */
+  position: fixed; /* 고정 위치 */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000; /* 다른 요소 위에 위치 */
+  z-index: 1000; /* 최상위 레이어 */
   border: none;
 }
 
@@ -411,6 +411,10 @@ footer .social-links a:hover {
   height: 100%;
   object-fit: cover; /* 화면 크기에 맞춤 */
   z-index: 10;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .video_bg {
@@ -486,17 +490,6 @@ footer .social-links a:hover {
   background-color: #030a17;
   border: 1px solid #030a17;
   color: #fff;
-}
-
-#youtubePlayer1 {
-  display: none; /* 기본적으로 숨김 */
-  position: fixed; /* 화면 기준으로 고정 */
-  top: 0;
-  left: 0;
-  width: 100vw; /* 전체 화면 너비 */
-  height: 100vh; /* 전체 화면 높이 */
-  z-index: 1000; /* 최상위 레이어 */
-  border: none; /* 테두리 제거 */
 }
 
 #videoBg1 {
